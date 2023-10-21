@@ -1,31 +1,72 @@
 /*
 Game logic:
-            1 = OK
-            2 = Not OK
+            1 = Correct
+            2 = Incorrect
 */
 
+//#region HTML Elments constants
+/**
+ * Div where the game board is populated to.
+ */
 const divBoard = document.getElementById('board');
+
+/**
+ * Paragraph tag to output error messages, if there is any.
+ */
 const pError = document.getElementById('error');
+
+/**
+ * Select element that will be populated with option elements based heightOptions and widthOptions arrays
+ */
+const selectGameOptions = document.getElementById('selectGameOptions');
+
+/**
+ * Button element that calls the startGame method when clicks
+ */
+const btnStartGame = document.getElementById('btnStartGame');
+
+/**
+ * Div that shows the selectGameOptions populates by options and btnStartGame
+ */
+const divGameInfo = document.getElementById('gameInfo');
+
+//#region Collections
 const rowHeadings = document.getElementsByClassName('rowHeading');
 const colHeadings = document.getElementsByClassName('colHeading');
-const selectGameOptions = document.getElementById('selectGameOptions');
-const btnStartGame = document.getElementById('btnStartGame');
-const divGameInfo = document.getElementById('gameInfo');
-const divGridSpacing = document.getElementById('gridSpacing');
 const divSquares = document.getElementsByClassName('sqaure');
+//#endregion
+//#endregion
 
-var width = 0;
-var height = 0;
-var skippedSqures = 0;
+//#region  Global variables
+var width = 0; //Width set by the user based on selectGameOptions options
+var height = 0; //Height set by the user based on selectGameOptions options
+/**
+ * Number of div elements that have been marked as "incorrect" to make sure that every row and coloumn has at least one div marked as "correct"
+ */
+var skippedSqures = 0; 
 var randomNumber = 0;
 
 var totalNumTiles = 0;
 var currentNumTiles = 0;
+//#endregion
 
+//#region  Global arrays
 var grid = [];
+
+//#region Constant arrays
 const heightOptions = [5, 10, 10, 15, 15, 20, 20];
 const widthOptions = [5, 5, 10, 10, 15, 15, 20];
+//#endregion
+//#endregion
 
+//#region  User defined functions
+
+//#region  generateBoard method
+/**
+ * Creates multiple HTMLDivElement objects in 2 for loops based on the height and width defined by the user
+ * 
+ * Populates the grid multidemisoinal array
+ */
 function generateBoard() {
     for (let a = 0; a < height + 1; a++) {
         const divRow = document.createElement('div');
@@ -81,8 +122,12 @@ function generateBoard() {
         }
     }
 }
+//#endregion
 
-function setHorizonalNumbers() {
+/**
+ * Addds numbers for how many "correct" divs in each row
+ */
+function setRowNumbers() {
     let horizontalNumber = 0;
 
     for (let a = 0; a < grid.length; a++) {
@@ -99,6 +144,10 @@ function setHorizonalNumbers() {
     }
 }
 
+//#region  setColoumnNumbers
+/**
+ * Addds numbers for how many "correct" divs in each coloumn
+ */
 function setColumnNumbers() {
     let colNumber = 0;
     randomNumber = 0;
@@ -136,7 +185,14 @@ function setColumnNumbers() {
         }
     }
 }
+//#endregion
 
+//#region launchGame method
+/**
+ * This method populates selectGameOptions drop down based on the widthOptions and heightOptions arrays.
+ * 
+ * This is also the method that gets called when the page is first loaded
+ */
 function launchGame() {
     const defaultOption = document.createElement('option');
     defaultOption.text = 'Please select a value';
@@ -157,7 +213,13 @@ function launchGame() {
         selectGameOptions.appendChild(optionElement);
     }
 }
+//#endregion
 
+//#region  startGame method
+/**
+ * This method gets called when the user clicks btnStartGame button. It validates the selectGameOptions's slection to make surer the user has
+ * a correct option. Then it calls the generateBoard, setColumnNumbers, setRowNumbers
+ */
 function startGame() {
     if (selectGameOptions.value === '') {
         pError.innerHTML = 'Selected option is not valid';
@@ -203,8 +265,10 @@ function startGame() {
     
     generateBoard();
     setColumnNumbers();
-    setHorizonalNumbers();
+    setRowNumbers();
 }
+//#endregion
+//#endregion
 
 btnStartGame.addEventListener('click', function(e) {
     e.preventDefault();
@@ -212,8 +276,10 @@ btnStartGame.addEventListener('click', function(e) {
     startGame();
 });
 
+//#region  JQuery functions
 $(document).ready(function() {
     divBoard.style.display = 'none';
 
     launchGame();
 });
+//#endregion
