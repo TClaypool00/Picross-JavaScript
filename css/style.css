@@ -1,0 +1,10 @@
+.square {
+  padding: 5%;
+  float: left;
+  width: 16%;
+  border: 2px solid black;
+}
+.square.unclicked {
+  background-color: grey;
+  cursor: pointer;
+}/*# sourceMappingURL=style.css.map */
