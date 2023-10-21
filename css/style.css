@@ -1,3 +1,7 @@
+body {
+  background-color: rgba(116, 102, 102, 0.291);
+}
+
 .square {
   padding: 5%;
   float: left;
@@ -5,6 +9,30 @@
   border: 2px solid black;
 }
 .square.unclicked {
-  background-color: grey;
+  background-color: rgba(255, 255, 255, 0.752);
   cursor: pointer;
+}
+.square.clicked {
+  cursor: initial;
+}
+.square.correct {
+  background-color: rgb(30, 128, 208);
+}
+.square.incorrect {
+  background-color: rgba(116, 102, 102, 0.291);
+}
+.square:hover:not(.rowHeading, .colHeading, .firstCell) {
+  background-color: orange;
+}
+.square:hover.correct, .square:hover.incorrect {
+  border: 2px solid orange;
+}
+.square:hover.correct {
+  background-color: rgb(30, 128, 208);
+}
+.square:hover.incorrect {
+  background-color: rgba(116, 102, 102, 0.291);
+}
+.square.rowHeading, .square.colHeading, .square.firstCell {
+  border: none;
 }/*# sourceMappingURL=style.css.map */
