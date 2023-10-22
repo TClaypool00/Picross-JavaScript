@@ -29,4 +29,11 @@
 }
 .square.rowHeading, .square.colHeading, .square.firstCell {
   border: none;
+}
+
+#clock {
+  padding: 200%;
+  background-color: white;
+  width: 100%;
+  text-align: center;
 }/*# sourceMappingURL=style.css.map */

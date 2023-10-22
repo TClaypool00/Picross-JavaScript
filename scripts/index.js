@@ -30,6 +30,8 @@ const btnStartGame = document.getElementById('btnStartGame');
  */
 const divGameInfo = document.getElementById('gameInfo');
 
+const divClock = document.getElementById('clock');
+
 //#region Collections
 const rowHeadings = document.getElementsByClassName('rowHeading');
 const divRows = document.getElementsByClassName('boardRow');
@@ -48,6 +50,8 @@ var randomNumber = 0;
 
 var totalNumTiles = 0;
 var currentNumTiles = 0;
+var timer;
+var timerString = '';
 //#endregion
 
 //#region  Global arrays
@@ -97,11 +101,12 @@ function generateBoard() {
                     }
 
                     subArray.push(1);
-                    totalNumTiles += 1;
                 } else {
                     skippedSqures += 1;
                     subArray.push(0);
                 }
+
+                totalNumTiles += 1;
             } else { //Number info tiles 
                 if (a > 0) {
                     tile.classList.add('rowHeading');
@@ -259,6 +264,7 @@ function startGame() {
 
     divGameInfo.style.display = 'none';
     divBoard.style.display = 'block';
+    divClock.style.display = 'block';
 
     let optionString = selectGameOptions.value;
     let widthString = '';
@@ -293,6 +299,7 @@ function startGame() {
     generateBoard();
     setColumnNumbers();
     setRowNumbers();
+    setTimer();
 }
 //#endregion
 
@@ -300,28 +307,52 @@ function startGame() {
 function baseTileClick(tile) {
     tile.classList.remove('unclicked');
     tile.classList.add('clicked');
+
+    currentNumTiles += 1;
+    if (currentNumTiles === totalNumTiles) {
+        stopTimer();
+        alert('You won!');
+    }
 }
 
 function tileLeftClick(tile, number) {
     if (number === 0) {
         tile.innerHTML = 'x';
-        tile.classList.add('text-danger');
+        tile.classList.add('text-danger', 'incorrect');
+    } else {
+        tile.classList.add('correct');
     }
 
-    tile.classList.add('correct');
     baseTileClick(tile);
 }
 
 function tileRightClick(tile, number) {
     if (number === 1) {
         tile.innerHTML = 'x';
-        tile.classList.add('text-danger');
+        tile.classList.add('text-danger', 'correct');
+    } else {
+        tile.classList.add('incorrect');
     }
-
-    tile.classList.add('incorrect');
     baseTileClick(tile);
 }
 //#endregion
+
+function setTimer() {
+    let time = new Date(0);
+    time.setMinutes(0);
+    time.setHours(0);
+    let counter = 0
+    timer = setInterval(function () {
+        counter += 1;
+        time.setSeconds(counter);
+
+        divClock.innerHTML = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
+    }, 1000);
+}
+
+function stopTimer() {
+    clearInterval(timer);
+}
 //#endregion
 
 btnStartGame.addEventListener('click', function(e) {
@@ -333,7 +364,10 @@ btnStartGame.addEventListener('click', function(e) {
 //#region  JQuery functions
 $(document).ready(function() {
     divBoard.style.display = 'none';
+    divClock.style.display = 'none';
 
     launchGame();
+
+    divClock.innerHTML = '00:00';
 });
 //#endregion
