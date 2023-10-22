@@ -4,6 +4,18 @@ Game logic:
             2 = Incorrect
 */
 
+/*
+TODO Lit
+1. Fix timer: updating the minute every second after second is above 60
+2. Add "New Game" button and functionality
+3. Add css for tiles rules for the other width option
+4.Add percent logic on how well the user is doing
+5 Make timer more stylish
+6. Add more documentation/comments
+7 Clean up code
+8. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional)
+*/
+
 //#region HTML Elments constants
 /**
  * Div where the game board is populated to.
