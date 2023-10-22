@@ -32,8 +32,8 @@ const divGameInfo = document.getElementById('gameInfo');
 
 //#region Collections
 const rowHeadings = document.getElementsByClassName('rowHeading');
+const divRows = document.getElementsByClassName('boardRow');
 const colHeadings = document.getElementsByClassName('colHeading');
-const divSquares = document.getElementsByClassName('sqaure');
 //#endregion
 //#endregion
 
@@ -70,6 +70,11 @@ const widthOptions = [5, 5, 10, 10, 15, 15, 20];
 function generateBoard() {
     for (let a = 0; a < height + 1; a++) {
         const divRow = document.createElement('div');
+
+        if (a > 0) {
+            divRow.classList.add('boardRow');
+        }
+
         divRow.classList.add('row');
         divBoard.appendChild(divRow);
         let subArray = new Array();
@@ -84,7 +89,7 @@ function generateBoard() {
 
             //Clickable tiles
             if (a !== 0 && b !== 0) {
-                tile.classList.add('unclicked');
+                tile.classList.add('unclicked', 'tile');
 
                 if (Math.random() < .4) {
                     if (skippedSqures > 0) {
@@ -133,12 +138,35 @@ function setRowNumbers() {
     for (let a = 0; a < grid.length; a++) {
         const gridElement = grid[a];
         const rowHeading = rowHeadings[a];
+        const row = divRows[a];
+
+        const tiles = row.getElementsByClassName('tile');
         for (let b = 0; b < gridElement.length + 1; b++) {
-            if (gridElement[b] === 1) {
+            const number = gridElement[b];
+
+            if (tiles.length !== 0) {
+                const tile = tiles[b];
+                
+                if (tile !== undefined) {
+                    tile.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        tileLeftClick(this, number);
+                    });
+
+                    tile.addEventListener('contextmenu', function(e) {
+                        e.preventDefault();
+                        tileRightClick(this, number);
+                    });
+                }
+            }
+
+            if (number === 1) {
                 horizontalNumber += 1;
-            } else if (horizontalNumber > 0) {
-                rowHeading.innerHTML += horizontalNumber + ' ';
-                horizontalNumber = 0;
+            } else {
+                if (horizontalNumber > 0) {
+                    rowHeading.innerHTML += horizontalNumber + ' ';
+                    horizontalNumber = 0;
+                }
             }
         }
     }
@@ -150,8 +178,8 @@ function setRowNumbers() {
  */
 function setColumnNumbers() {
     let colNumber = 0;
-    randomNumber = 0;
-    skippedSqures = 0;
+    // randomNumber = 0;
+    // skippedSqures = 0;
 
     for (let a = 0; a < width; a++) {
         const colHeading = colHeadings[a];
@@ -160,8 +188,6 @@ function setColumnNumbers() {
 
             if (tile === 1) {
                 colNumber += 1;
-            } else {
-                skippedSqures += 1;
             }
             
             if ((tile === 0 || (b === grid.length -1 && tile === 1)) && colNumber > 0) {
@@ -175,14 +201,15 @@ function setColumnNumbers() {
             }
         }
 
-        if (skippedSqures === height) {
-            randomNumber = Math.floor(Math.random() * height);
-            grid[a][randomNumber] = 1;
-            colHeading.innerHTML = 1;
+        // TODO: Logic to ensure at least one tile per coloumn is marked as "OK" does not work
+        // if (skippedSqures === height) {
+        //     randomNumber = Math.floor(Math.random() * height);
+        //     grid[a][randomNumber] = 1;
+        //     colHeading.innerHTML = 1;
 
-            randomNumber = 0;
-            skippedSqures = 0;
-        }
+        //     randomNumber = 0;
+        //     skippedSqures = 0;
+        // }
     }
 }
 //#endregion
@@ -266,6 +293,33 @@ function startGame() {
     generateBoard();
     setColumnNumbers();
     setRowNumbers();
+}
+//#endregion
+
+//#region  Tile click events
+function baseTileClick(tile) {
+    tile.classList.remove('unclicked');
+    tile.classList.add('clicked');
+}
+
+function tileLeftClick(tile, number) {
+    if (number === 0) {
+        tile.innerHTML = 'x';
+        tile.classList.add('text-danger');
+    }
+
+    tile.classList.add('correct');
+    baseTileClick(tile);
+}
+
+function tileRightClick(tile, number) {
+    if (number === 1) {
+        tile.innerHTML = 'x';
+        tile.classList.add('text-danger');
+    }
+
+    tile.classList.add('incorrect');
+    baseTileClick(tile);
 }
 //#endregion
 //#endregion
