@@ -3,10 +3,6 @@ $clickedColor: rgb(171, 198, 225);
 $darkerGrey: rgba(116, 102, 102, 0.291);
 $correctColor: rgb(30, 128, 208);
 
-body {
-    background-color: $darkerGrey
-}
-
 .square {
     padding: 5%;
     float: left;
@@ -20,24 +16,6 @@ body {
 
     &.clicked {
         cursor: initial;
-    }
-
-    &.correct {
-        background-color: $correctColor
-    }
-
-    &.incorrect {
-        background-color: $darkerGrey;
-    }
-
-    &:hover {
-        &:not(.rowHeading, .colHeading, .firstCell) {
-            background-color: orange;
-        }
-
-        &.correct, &.incorrect {
-            border: 2px solid orange;
-        }
 
         &.correct {
             background-color: $correctColor;
@@ -45,6 +23,19 @@ body {
 
         &.incorrect {
             background-color: $darkerGrey;
+        }
+    }
+
+    &.tile {
+        text-align: center;
+        font-size: 200%;
+
+        &:hover:not(.correct, .incorrect) {
+            background-color: orange;
+        }
+
+        &.correct:hover, &.incorrect:hover {
+            border: 2px solid orange;
         }
     }
 

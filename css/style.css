@@ -1,7 +1,3 @@
-body {
-  background-color: rgba(116, 102, 102, 0.291);
-}
-
 .square {
   padding: 5%;
   float: left;
@@ -15,23 +11,21 @@ body {
 .square.clicked {
   cursor: initial;
 }
-.square.correct {
+.square.clicked.correct {
   background-color: rgb(30, 128, 208);
 }
-.square.incorrect {
+.square.clicked.incorrect {
   background-color: rgba(116, 102, 102, 0.291);
 }
-.square:hover:not(.rowHeading, .colHeading, .firstCell) {
+.square.tile {
+  text-align: center;
+  font-size: 200%;
+}
+.square.tile:hover:not(.correct, .incorrect) {
   background-color: orange;
 }
-.square:hover.correct, .square:hover.incorrect {
+.square.tile.correct:hover, .square.tile.incorrect:hover {
   border: 2px solid orange;
-}
-.square:hover.correct {
-  background-color: rgb(30, 128, 208);
-}
-.square:hover.incorrect {
-  background-color: rgba(116, 102, 102, 0.291);
 }
 .square.rowHeading, .square.colHeading, .square.firstCell {
   border: none;
