@@ -45,12 +45,12 @@ $correctColor: rgb(30, 128, 208);
     }
 }
 
-#clock {
+.blueBorderWhiteText {
     padding: 16%;
     background-color: white;
     width: 163%;
     text-align: center;
-    margin-top: 100%;
+    margin-top: 87%;
     background-color: $darkerGrey;
     color: white;
     border: 10px solid $correctColor;
@@ -61,4 +61,8 @@ $correctColor: rgb(30, 128, 208);
     margin-top: 20%;
     font-size: 150%;
     width: 161%;;
+}
+
+#divPercent {
+    margin-top: 20%;
 }

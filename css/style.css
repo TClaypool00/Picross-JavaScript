@@ -31,12 +31,12 @@
   border: none;
 }
 
-#clock {
+.blueBorderWhiteText {
   padding: 16%;
   background-color: white;
   width: 163%;
   text-align: center;
-  margin-top: 100%;
+  margin-top: 87%;
   background-color: rgba(116, 102, 102, 0.291);
   color: white;
   border: 10px solid rgb(30, 128, 208);
@@ -47,4 +47,8 @@
   margin-top: 20%;
   font-size: 150%;
   width: 161%;
+}
+
+#divPercent {
+  margin-top: 20%;
 }/*# sourceMappingURL=style.css.map */

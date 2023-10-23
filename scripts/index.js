@@ -6,12 +6,11 @@ Game logic:
 
 /*
 TODO Lit
-1.Add percent logic on how well the user is doing
-2. Add more documentation/comments
-3 Clean up code
-4. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional)
-5. Added congradulations message when user has compleetd the game.
-6. Added a "rules" page/section
+1. Add more documentation/comments
+2 Clean up code
+3. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional)
+4. Added congradulations message when user has compleetd the game.
+5. Added a "rules" page/section
 */
 
 //#region HTML Elments constants
@@ -44,6 +43,8 @@ const divGameInfo = document.getElementById('gameInfo');
 
 const divClock = document.getElementById('clock');
 
+const divPercent = document.getElementById('divPercent');
+
 //#region Collections
 const rowHeadings = document.getElementsByClassName('rowHeading');
 const divRows = document.getElementsByClassName('boardRow');
@@ -65,6 +66,7 @@ var randomNumber = 0;
 
 var totalNumTiles = 0;
 var currentNumTiles = 0;
+var wrongMoves = 0;
 var timer;
 var seconds = 0;
 var minutes = 0;
@@ -361,6 +363,8 @@ function baseTileClick(tile) {
 
 function tileLeftClick(tile, number) {
     if (number === 0) {
+        wrongMoves += 1;
+        changePercentage();
         tile.innerHTML = 'x';
         tile.classList.add('text-danger', 'incorrect');
     } else {
@@ -373,6 +377,8 @@ function tileLeftClick(tile, number) {
 function tileRightClick(tile, number) {
     if (number === 1) {
         tile.innerHTML = 'x';
+        wrongMoves += 1;
+        changePercentage();
         tile.classList.add('text-danger', 'correct');
     } else {
         tile.classList.add('incorrect');
@@ -422,6 +428,10 @@ function newGame() {
     currentNumTiles = 0;
     seconds = 0;
     minutes = 0;
+}
+
+function changePercentage() {
+    divPercent.innerHTML = (100 * (totalNumTiles - wrongMoves)) / totalNumTiles + '%';
 }
 //#endregion
 
