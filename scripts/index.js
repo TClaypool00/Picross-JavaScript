@@ -6,14 +6,11 @@ Game logic:
 
 /*
 TODO Lit
-1. Fix timer: updating the minute every second after second is above 60
-2. Add "New Game" button and functionality
-3. Add css for tiles rules for the other width option
-4.Add percent logic on how well the user is doing
-5 Make timer more stylish
-6. Add more documentation/comments
-7 Clean up code
-8. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional)
+1. Add css for tiles rules for the other width option
+2.Add percent logic on how well the user is doing
+3. Add more documentation/comments
+4 Clean up code
+5. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional)
 */
 
 //#region HTML Elments constants
@@ -37,6 +34,8 @@ const selectGameOptions = document.getElementById('selectGameOptions');
  */
 const btnStartGame = document.getElementById('btnStartGame');
 
+const btnNewGame = document.getElementById('btnNewGame');
+
 /**
  * Div that shows the selectGameOptions populates by options and btnStartGame
  */
@@ -48,6 +47,9 @@ const divClock = document.getElementById('clock');
 const rowHeadings = document.getElementsByClassName('rowHeading');
 const divRows = document.getElementsByClassName('boardRow');
 const colHeadings = document.getElementsByClassName('colHeading');
+const spanMinutes = document.getElementById('minutes');
+const spanSeconds = document.getElementById('seconds');
+const divGame = document.getElementById('divGame');
 //#endregion
 //#endregion
 
@@ -63,7 +65,8 @@ var randomNumber = 0;
 var totalNumTiles = 0;
 var currentNumTiles = 0;
 var timer;
-var timerString = '';
+var seconds = 0;
+var minutes = 0;
 //#endregion
 
 //#region  Global arrays
@@ -275,8 +278,7 @@ function startGame() {
     }
 
     divGameInfo.style.display = 'none';
-    divBoard.style.display = 'block';
-    divClock.style.display = 'block';
+    divGame.style.display = 'block';
 
     let optionString = selectGameOptions.value;
     let widthString = '';
@@ -311,7 +313,7 @@ function startGame() {
     generateBoard();
     setColumnNumbers();
     setRowNumbers();
-    setTimer();
+    timer = setInterval(startPicrossTimer, 1000);
 }
 //#endregion
 
@@ -349,21 +351,47 @@ function tileRightClick(tile, number) {
 }
 //#endregion
 
-function setTimer() {
-    let time = new Date(0);
-    time.setMinutes(0);
-    time.setHours(0);
-    let counter = 0
-    timer = setInterval(function () {
-        counter += 1;
-        time.setSeconds(counter);
+function startPicrossTimer() {
+    seconds++;
 
-        divClock.innerHTML = `${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`;
-    }, 1000);
+    if (seconds <= 9) {
+        spanSeconds.innerHTML = "0" + seconds;
+    } else if (seconds >= 10) {
+        spanSeconds.innerHTML = seconds;
+    }
+
+    if (seconds >= 60) {
+        minutes++;
+        spanMinutes.innerHTML  = "0" + minutes;
+        seconds = 0;
+        spanSeconds.innerHTML = "0" + 0;
+    }
+
+    if (minutes > 9) {
+        spanMinutes.innerHTML = minutes;
+    }
 }
 
 function stopTimer() {
     clearInterval(timer);
+}
+
+function newGame() {
+    divBoard.innerHTML = '';
+    divGameInfo.style.display = 'block';
+    divGame.style.display = 'none';
+    seconds = 0;
+    minutes = 0;
+    selectGameOptions.value = '';
+    spanMinutes.innerHTML = '00';
+    spanMinutes.innerHTML = '00';
+    skippedSqures = 0; 
+    randomNumber = 0;
+
+    totalNumTiles = 0;
+    currentNumTiles = 0;
+    seconds = 0;
+    minutes = 0;
 }
 //#endregion
 
@@ -373,13 +401,17 @@ btnStartGame.addEventListener('click', function(e) {
     startGame();
 });
 
+btnNewGame.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    stopTimer();
+    newGame();
+});
+
 //#region  JQuery functions
 $(document).ready(function() {
-    divBoard.style.display = 'none';
-    divClock.style.display = 'none';
+    divGame.style.display = 'none';
 
     launchGame();
-
-    divClock.innerHTML = '00:00';
 });
 //#endregion

@@ -18,14 +18,19 @@
                     <button type="button" class="btn btn-primary" id="btnStartGame">Start Game</button>
                 </div>
 
-                <div class="col-md-8">
+                <div id="divGame" class="col-md-8">
                     <div class="row">
-                        <div class="col-md-11">
+                        <div class="col-md-10">
                             <div id="board" class="mb-5"></div>
                         </div>
 
-                        <div class="col-md-1">
-                            <div id="clock"></div>
+                        <div class="col-md-2">
+                            <br />
+                            <div id="clock">
+                                <p><span id="minutes">00</span>:<span id="seconds">00</span></p>
+                            </div>
+
+                            <button id="btnNewGame" type="button" class="btn btn-primary">Start a new Game</button>
                         </div>
                     </div>
                 </div>
