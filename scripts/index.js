@@ -7,10 +7,10 @@ Game logic:
 /*
 TODO Lit
 1. Add more documentation/comments
-2 Clean up code
-3. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional)
-4. Added congradulations message when user has compleetd the game.
-5. Added a "rules" page/section
+2. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional)
+3. Added congradulations message when user has compleetd the game.
+4. Added a "rules" page/section
+5. Fix new game bug
 */
 
 //#region HTML Elments constants
@@ -23,6 +23,8 @@ const divBoard = document.getElementById('board');
  * Paragraph tag to output error messages, if there is any.
  */
 const pError = document.getElementById('error');
+
+const pSuccess = document.getElementById('success');
 
 /**
  * Select element that will be populated with option elements based heightOptions and widthOptions arrays
@@ -357,7 +359,7 @@ function baseTileClick(tile) {
     currentNumTiles += 1;
     if (currentNumTiles === totalNumTiles) {
         stopTimer();
-        alert('You won!');
+        pSuccess.innerHTML = 'Congratulations, you won!';
     }
 }
 
@@ -428,6 +430,8 @@ function newGame() {
     currentNumTiles = 0;
     seconds = 0;
     minutes = 0;
+    pSuccess.innerHTML = '';
+    
 }
 
 function changePercentage() {
