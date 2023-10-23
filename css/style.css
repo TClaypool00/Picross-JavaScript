@@ -32,16 +32,19 @@
 }
 
 #clock {
-  padding: 25%;
+  padding: 16%;
   background-color: white;
-  width: 200%;
+  width: 163%;
   text-align: center;
   margin-top: 100%;
   background-color: rgba(116, 102, 102, 0.291);
   color: white;
   border: 10px solid rgb(30, 128, 208);
+  font-size: 200%;
 }
 
 #btnNewGame {
   margin-top: 20%;
+  font-size: 150%;
+  width: 161%;
 }/*# sourceMappingURL=style.css.map */
