@@ -132,9 +132,29 @@ function generateBoard() {
                     }
 
                     subArray.push(1);
+
+                    tile.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        tileLeftClick(this, 1);
+                    });
+
+                    tile.addEventListener('contextmenu', function(e) {
+                        e.preventDefault();
+                        tileRightClick(this, 1);
+                    });
                 } else {
                     skippedSqures += 1;
                     subArray.push(0);
+
+                    tile.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        tileLeftClick(this, 0);
+                    });
+
+                    tile.addEventListener('contextmenu', function(e) {
+                        e.preventDefault();
+                        tileRightClick(this, 0);
+                    });
                 }
 
                 totalNumTiles += 1;
@@ -187,25 +207,8 @@ function setRowNumbers() {
         const rowHeading = rowHeadings[a];
         const row = divRows[a];
 
-        const tiles = row.getElementsByClassName('tile');
         for (let b = 0; b < gridElement.length + 1; b++) {
             const number = gridElement[b];
-
-            if (tiles.length !== 0) {
-                const tile = tiles[b];
-                
-                if (tile !== undefined) {
-                    tile.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        tileLeftClick(this, number);
-                    });
-
-                    tile.addEventListener('contextmenu', function(e) {
-                        e.preventDefault();
-                        tileRightClick(this, number);
-                    });
-                }
-            }
 
             if (number === 1) {
                 horizontalNumber += 1;
