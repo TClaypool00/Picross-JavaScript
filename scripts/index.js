@@ -10,6 +10,8 @@ TODO Lit
 2. Add more documentation/comments
 3 Clean up code
 4. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional)
+5. Added congradulations message when user has compleetd the game.
+6. Added a "rules" page/section
 */
 
 //#region HTML Elments constants
@@ -212,11 +214,9 @@ function setRowNumbers() {
 
             if (number === 1) {
                 horizontalNumber += 1;
-            } else {
-                if (horizontalNumber > 0) {
-                    rowHeading.innerHTML += horizontalNumber + ' ';
-                    horizontalNumber = 0;
-                }
+            } else if (horizontalNumber > 0) {
+                rowHeading.innerHTML += horizontalNumber + ' ';
+                horizontalNumber = 0;
             }
         }
     }
