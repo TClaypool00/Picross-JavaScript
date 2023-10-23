@@ -6,11 +6,10 @@ Game logic:
 
 /*
 TODO Lit
-1. Add css for tiles rules for the other width option
-2.Add percent logic on how well the user is doing
-3. Add more documentation/comments
-4 Clean up code
-5. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional)
+1.Add percent logic on how well the user is doing
+2. Add more documentation/comments
+3 Clean up code
+4. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional)
 */
 
 //#region HTML Elments constants
@@ -101,14 +100,31 @@ function generateBoard() {
             const tile = document.createElement('div');
             tile.classList.add('square');
 
-            if (width >= 10) {
-                tile.style.padding = '4%';
-                tile.style.width = '8%';
-            }
+            // if (width === 10) {
+            //     tile.style.padding = '4%';
+            //     tile.style.width = '8%';
+            // } else if (width === 15) {
+            //     tile.style.padding = '1%';
+            //     tile.style.width = '6%';
+            // } else if (width === 20) {
+            //     tile.style.padding = '0.25%';
+            //     tile.style.width = '4%';
+            // }
 
             //Clickable tiles
             if (a !== 0 && b !== 0) {
                 tile.classList.add('unclicked', 'tile');
+
+                if (width === 10) {
+                    tile.style.width = '4%';
+                    tile.style.padding = '3%';
+                } else if (width === 15) {
+                    tile.style.width = '5.55%';
+                    tile.style.padding = '2%';
+                } else if (width === 20) {
+                    tile.style.width = '4.2%';
+                    tile.style.padding = '1.88%';
+                }
 
                 if (Math.random() < .4) {
                     if (skippedSqures > 0) {
@@ -127,6 +143,17 @@ function generateBoard() {
                     tile.classList.add('rowHeading');
                 } else if (b > 0) {
                     tile.classList.add('colHeading');
+
+                    if (width === 10) {
+                        tile.style.width = '6.4%';
+                        tile.style.padding = '3%';
+                    } else if (width === 15) {
+                        tile.style.width = '5%';
+                        tile.style.padding = '2.75%';
+                    } else if (width === 20) {
+                        tile.style.width = '4.2%';
+                        tile.style.padding = '1.88%';
+                    }
                 } else {
                     tile.classList.add('firstCell');
                 }
