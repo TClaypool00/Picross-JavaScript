@@ -46,8 +46,16 @@ $correctColor: rgb(30, 128, 208);
 }
 
 #clock {
-    padding: 200%;
+    padding: 25%;
     background-color: white;
-    width: 100%;
+    width: 200%;
     text-align: center;
+    margin-top: 100%;
+    background-color: $darkerGrey;
+    color: white;
+    border: 10px solid $correctColor;
+}
+
+#btnNewGame {
+    margin-top: 20%;
 }
