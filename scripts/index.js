@@ -7,8 +7,7 @@ Game logic:
 /*
 TODO Lit
 1. Add more documentation/comments
-2. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional)
-3. Fix new game bug
+2. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional).
 */
 
 //#region HTML Elments constants
@@ -423,6 +422,10 @@ function newGame() {
     spanMinutes.innerHTML = '00';
     skippedSqures = 0; 
     randomNumber = 0;
+    colHeadings.innerHTML = '';
+    width = 0;
+    height = 0;
+    grid = [];
 
     totalNumTiles = 0;
     currentNumTiles = 0;
