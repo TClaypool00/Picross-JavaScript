@@ -13,6 +13,9 @@
                 <h1 class="h1">Picross - JavaScript</h1>
                 <p id="error" class="text-danger"></p>
                 <p id="success" class="text-success"></p>
+                <div class="col-md-4">
+                    <button type="button" id="rules" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#rulesModal">Open rules</button>
+                </div>
                 <div id="gameInfo" class="col-md-4">
                     <select id="selectGameOptions" class="form-select mb-3"></select>
                         
@@ -33,6 +36,30 @@
                             <div id="divPercent" class="blueBorderWhiteText">100%</div>
 
                             <button id="btnNewGame" type="button" class="btn btn-primary">Start a new Game</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="rulesModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Rules</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>All squares must be clicked on. Either blue(filled in) or grey(skipped).</p>
+                                <p>To fill in a square, use the left click.</p>
+                                <p>To skip a square, use the right-click.</p>
+                                <p>At the beginning of row and column will have numbers on it. For example: "<b>2 2</b>".</p>
+                                <p>This means that somewhere on row, there are <b>2</b> "sets" of <b>2</b> consective "filled in" squares.</p>
+                                <p>Each "set" must have at least one square marked as "skipped" between them.</p>
+                                <br />
+                                <p>The objective of the game is to mark all the squares as either "filled in" or "skipped". Once all squares have been marked, the timer will stop, a message will appear and the game will end.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>

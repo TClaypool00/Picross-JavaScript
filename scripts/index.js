@@ -8,9 +8,7 @@ Game logic:
 TODO Lit
 1. Add more documentation/comments
 2. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional)
-3. Added congradulations message when user has compleetd the game.
-4. Added a "rules" page/section
-5. Fix new game bug
+3. Fix new game bug
 */
 
 //#region HTML Elments constants
