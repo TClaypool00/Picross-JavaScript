@@ -402,34 +402,40 @@ function baseTileClick(tile) {
 /**
  * This is method is to be called when the user clicks the left mouse button
  * @param {*} tile HtmlDivelement that is currently being clicked on
+ * @param {*} number Number - The same number that is in the array accepted values (1 or 0)
  */
 function tileLeftClick(tile, number) {
-    if (number === 0) {
-        wrongMoves += 1;
-        changePercentage();
-        tile.innerHTML = 'x';
-        tile.classList.add('text-danger', 'incorrect');
-    } else {
-        tile.classList.add('correct');
+    if (tile.classList.contains('unclicked')) {
+        if (number === 0) {
+            wrongMoves += 1;
+            changePercentage();
+            tile.innerHTML = 'x';
+            tile.classList.add('text-danger', 'incorrect');
+        } else {
+            tile.classList.add('correct');
+        }
+    
+        baseTileClick(tile);
     }
-
-    baseTileClick(tile);
 }
 
 /**
  * This is method is to be called when the user clicks the right mouse button
  * @param {*} tile HtmlDivelement that is currently being clicked on
+ * @param {*} number Number - The same number that is in the array accepted values (1 or 0)
  */
 function tileRightClick(tile, number) {
-    if (number === 1) {
-        tile.innerHTML = 'x';
-        wrongMoves += 1;
-        changePercentage();
-        tile.classList.add('text-danger', 'correct');
-    } else {
-        tile.classList.add('incorrect');
+    if (tile.classList.contains('unclicked')) {
+        if (number === 1) {
+            tile.innerHTML = 'x';
+            wrongMoves += 1;
+            changePercentage();
+            tile.classList.add('text-danger', 'correct');
+        } else {
+            tile.classList.add('incorrect');
+        }
+        baseTileClick(tile);
     }
-    baseTileClick(tile);
 }
 //#endregion
 
