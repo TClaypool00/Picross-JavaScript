@@ -1,13 +1,7 @@
 /*
 Game logic:
-            1 = Correct
-            2 = Incorrect
-*/
-
-/*
-TODO Lit
-1. Add more documentation/comments
-2. Fix logic to ensure every coloumn has at least 1 "OK" tile (optional).
+            1 = Filled in
+            0 = Skipped
 */
 
 //#region HTML Elments constants
@@ -40,16 +34,44 @@ const btnNewGame = document.getElementById('btnNewGame');
  */
 const divGameInfo = document.getElementById('gameInfo');
 
+/**
+ * Placeholder for timer when game is being played.
+ */
 const divClock = document.getElementById('clock');
 
+/**
+ * Placeholder for percentage to show the user their score.
+ */
 const divPercent = document.getElementById('divPercent');
 
 //#region Collections
+/**
+ * A collection of divs with a class of "rowHeading" attached to them. These divs show the user how many tiles per row need to be filled in example: "2 2"
+ */
 const rowHeadings = document.getElementsByClassName('rowHeading');
+/**
+ * A collection of divs elements with a class of "boardRow" attached to them.
+ * 
+ * The purpose of these divs is seperate the tiles per row 
+ */
 const divRows = document.getElementsByClassName('boardRow');
+
+/**
+ * A collection of divs with a class of "colHeading" attached to them. These divs show the user how many tiles per coloumn need to be filled in example: "2 2"
+ */
 const colHeadings = document.getElementsByClassName('colHeading');
+/**
+ * A span element to display the minute section of the timer when the game is being played.
+ */
 const spanMinutes = document.getElementById('minutes');
+/**
+ * A span element to display the second section of the timer when the game is being played.
+ */
 const spanSeconds = document.getElementById('seconds');
+
+/**
+ * A div element that serves as a placeholder for all the tiles, coloum headings, row headings, new game button, percentage div, and timer div.
+ */
 const divGame = document.getElementById('divGame');
 //#endregion
 //#endregion
@@ -60,22 +82,32 @@ var height = 0; //Height set by the user based on selectGameOptions options
 /**
  * Number of div elements that have been marked as "incorrect" to make sure that every row and coloumn has at least one div marked as "correct"
  */
-var skippedSqures = 0; 
-var randomNumber = 0;
+var skippedSqures = 0;  //A number variable that serves as a way to ensure every row and coloumn has at least one tile marked as "filled in"
+var randomNumber = 0; //to ensure that every row and coloumn has at least one tile marked as "filled in". The program will randomly select a number. This variable serves as a placeholder
 
-var totalNumTiles = 0;
-var currentNumTiles = 0;
-var wrongMoves = 0;
-var timer;
-var seconds = 0;
-var minutes = 0;
+var totalNumTiles = 0; //This variable is store the total number of tiles per game
+var currentNumTiles = 0; //This variable is to the how the tiles the user has turned over
+var wrongMoves = 0; // This variable is to store how many tiles the user has incorrectly marked
+var timer; // This variable is set and clear the timer when the game is running
+var seconds = 0; // This variable is increment and display the seconds as the timer has been running.
+var minutes = 0; // This variable is increment and display the minutes as the timer has been running.
 //#endregion
 
 //#region  Global arrays
+/**
+ * Array to hold sub arrays which will be filled with either 1 (filled in) or 0 (skipped)
+ */
 var grid = [];
 
 //#region Constant arrays
+/**
+ * Array to hold all options for the height
+ */
 const heightOptions = [5, 10, 10, 15, 15, 20, 20];
+
+/**
+ * Array to hold all options for the with
+ */
 const widthOptions = [5, 5, 10, 10, 15, 15, 20];
 //#endregion
 //#endregion
@@ -103,21 +135,11 @@ function generateBoard() {
             const tile = document.createElement('div');
             tile.classList.add('square');
 
-            // if (width === 10) {
-            //     tile.style.padding = '4%';
-            //     tile.style.width = '8%';
-            // } else if (width === 15) {
-            //     tile.style.padding = '1%';
-            //     tile.style.width = '6%';
-            // } else if (width === 20) {
-            //     tile.style.padding = '0.25%';
-            //     tile.style.width = '4%';
-            // }
-
             //Clickable tiles
             if (a !== 0 && b !== 0) {
                 tile.classList.add('unclicked', 'tile');
 
+                //To shorten the padding and with so the tiles still fit on one row depending on what the width is
                 if (width === 10) {
                     tile.style.width = '4%';
                     tile.style.padding = '3%';
@@ -129,7 +151,8 @@ function generateBoard() {
                     tile.style.padding = '1.88%';
                 }
 
-                if (Math.random() < .4) {
+                //Randomly selects 1 (filled in) or 0 (skipped). There is a 55% chance the program will select a one (filled in)
+                if (Math.random() < .55) {
                     if (skippedSqures > 0) {
                         skippedSqures = 0;
                     }
@@ -162,11 +185,12 @@ function generateBoard() {
 
                 totalNumTiles += 1;
             } else { //Number info tiles 
-                if (a > 0) {
+                if (a > 0) { //Row heading tiles
                     tile.classList.add('rowHeading');
-                } else if (b > 0) {
+                } else if (b > 0) { //Coloumn headings tiles
                     tile.classList.add('colHeading');
 
+                    //To shorten the padding and with so the tiles still fit on one row depending on what the width is
                     if (width === 10) {
                         tile.style.width = '6.4%';
                         tile.style.padding = '3%';
@@ -178,6 +202,13 @@ function generateBoard() {
                         tile.style.padding = '1.88%';
                     }
                 } else {
+                    //First tile of the grid. Doesn't serve any purpose
+                    /*
+                    O X X X
+                    X
+                    X
+                    X
+                    */
                     tile.classList.add('firstCell');
                 }
             }
@@ -185,13 +216,18 @@ function generateBoard() {
             divRow.appendChild(tile);
         }
 
+        //If there are no tiles in the current row being iterated
         if (skippedSqures === width) {
+            //The program will randomly a number between 0 and the width
             randomNumber = Math.floor(Math.random() * width);
+            //And change it to 1 (filled in)
             subArray[randomNumber] = 1;
         }
 
+        //Resets skippedSqures variable per row
         skippedSqures = 0;
 
+        //Pushes sub arry in to the grid array variable
         if (a > 0) {
             grid.push(subArray);
         }
@@ -208,7 +244,6 @@ function setRowNumbers() {
     for (let a = 0; a < grid.length; a++) {
         const gridElement = grid[a];
         const rowHeading = rowHeadings[a];
-        const row = divRows[a];
 
         for (let b = 0; b < gridElement.length + 1; b++) {
             const number = gridElement[b];
@@ -349,6 +384,10 @@ function startGame() {
 //#endregion
 
 //#region  Tile click events
+/**
+ * This is method has logic that both the tileLeftClick and tileRightClick method use. Reduces code redundency
+ * @param {*} tile HtmlDivelement that is currently being clicked on
+ */
 function baseTileClick(tile) {
     tile.classList.remove('unclicked');
     tile.classList.add('clicked');
@@ -360,6 +399,10 @@ function baseTileClick(tile) {
     }
 }
 
+/**
+ * This is method is to be called when the user clicks the left mouse button
+ * @param {*} tile HtmlDivelement that is currently being clicked on
+ */
 function tileLeftClick(tile, number) {
     if (number === 0) {
         wrongMoves += 1;
@@ -373,6 +416,10 @@ function tileLeftClick(tile, number) {
     baseTileClick(tile);
 }
 
+/**
+ * This is method is to be called when the user clicks the right mouse button
+ * @param {*} tile HtmlDivelement that is currently being clicked on
+ */
 function tileRightClick(tile, number) {
     if (number === 1) {
         tile.innerHTML = 'x';
@@ -386,6 +433,11 @@ function tileRightClick(tile, number) {
 }
 //#endregion
 
+/**
+ * Function to be called when the the interval is set. This function is called every 1 second
+ * 
+ * Increments and displays the how many seconds and minutes have passed
+ */
 function startPicrossTimer() {
     seconds++;
 
@@ -395,6 +447,9 @@ function startPicrossTimer() {
         spanSeconds.innerHTML = seconds;
     }
 
+    //If seconds is greater than or equal to 60
+    //The minutes variable increases by 1
+    //And the seconds variable resets to 0
     if (seconds >= 60) {
         minutes++;
         spanMinutes.innerHTML  = "0" + minutes;
@@ -407,10 +462,16 @@ function startPicrossTimer() {
     }
 }
 
+/**
+ * Stops the timer by clearing the interval
+ */
 function stopTimer() {
     clearInterval(timer);
 }
 
+/**
+ * Resets the game by stopping the timer, reseting all the drop down value back to the default value, resets the grid, width, height, etc.
+ */
 function newGame() {
     divBoard.innerHTML = '';
     divGameInfo.style.display = 'block';
@@ -435,11 +496,15 @@ function newGame() {
     
 }
 
+/**
+ * To change and display the percentage. This function gets called when the user makes a wrong click
+ */
 function changePercentage() {
     divPercent.innerHTML = (100 * (totalNumTiles - wrongMoves)) / totalNumTiles + '%';
 }
 //#endregion
 
+//#region Click event functions
 btnStartGame.addEventListener('click', function(e) {
     e.preventDefault();
 
@@ -452,6 +517,7 @@ btnNewGame.addEventListener('click', function(e) {
     stopTimer();
     newGame();
 });
+//#endregion
 
 //#region  JQuery functions
 $(document).ready(function() {
